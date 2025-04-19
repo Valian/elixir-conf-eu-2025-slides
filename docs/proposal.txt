@@ -1,0 +1,95 @@
+This is a proposal for a ElixirConfEU 2025 conference talk.
+
+# Title
+Why mixing LiveView and a frontend library is a great idea
+
+# Description (300-1000 characters)
+LiveView revolutionized web development by enabling server-rendered, dynamic UI. As our applications grow in complexity, we often find ourselves needing more sophisticated client-side interactions. While LiveView excels at server-driven UI, managing complex client-side state can become challenging.
+
+This talk explores how integrating a frontend library with LiveView offers the best of both worlds: LiveView's powerful server-side model combined with the rich ecosystem of modern frontend frameworks. Using LiveVue as a case study, we'll demonstrate practical patterns for managing client-state, leveraging existing frontend components, and maintaining a clean architecture. You'll learn when and how to introduce a frontend library to complement LiveView, not replace it.
+
+# Outline
+1. Introduction (5 minutes)
+   - Brief overview of LiveView's strengths
+   - The challenge of client-side state management
+   - When do we need more than just LiveView?
+
+2. The Client-Side State Problem (7 minutes)
+   - Common scenarios requiring client-side state
+     - Form interactions
+     - Animations
+     - Complex UI components
+   - Current solutions with Phoenix hooks
+     - Demo: Simple vs Complex interactions
+     - Why hooks become unwieldy at scale
+   - The need for a better solution
+
+3. Enter Frontend Libraries (8 minutes)
+   - Why Vue.js? (or any modern frontend framework)
+   - LiveVue introduction
+     - Architecture overview
+     - How it bridges LiveView and Vue
+   - Benefits of this approach
+     - Clear boundary between server and client state
+     - Access to rich ecosystem
+     - Familiar development experience
+
+4. Implementation Strategies (7 minutes)
+   - The Two Valid Approaches
+     - Isolated components (rich text editors, date pickers, etc.)
+     - Full Vue rendering (Inertia.js style)
+   - Why middle ground should be avoided
+   - Making the choice for your project
+
+5. LiveVue in Action (8 minutes)
+   - Live coding demo showing:
+     - Basic component integration
+     - Props and state management
+     - Event handling
+     - SSR and optimization features
+   - Real-world examples and patterns
+
+6. Conclusion and Q&A (5 minutes)
+   - When to consider this approach
+   - Resources and next steps
+   - Questions from audience
+
+# Additional notes
+I created LiveVue because I kept running into the same problem: LiveView is amazing, but sometimes you just need a bit more on the frontend. After years of building LiveView applications, I found myself writing increasingly complicated JS hooks. Taking inspiration from live_svelte and Inertia.js approaches, I created LiveVue - a bridge between LiveView and Vue.js that I've been successfully using in production ever since.
+
+I'm excited to share what I've learned along the way, including the good, the bad, and the "I wish I knew this earlier" moments. With more teams wanting to use their frontend expertise alongside LiveView, I believe this talk will give practical, real-world guidance on how to get the best of both worlds.
+
+# Audience
+This talk is aimed at Elixir developers who:
+- Have experience with Phoenix LiveView
+- Are facing challenges with increasingly complex client-side interactions
+- Want to understand how to effectively combine server and client-side frameworks
+- Are interested in modernizing their LiveView applications while maintaining their existing investment
+- Have team members with Vue.js (or other frontend framework) experience
+
+# Key takeaways
+Attendees will:
+- Learn to identify when introducing a frontend library alongside LiveView makes sense
+- Understand patterns for cleanly separating server and client-side concerns
+- See practical examples of integrating Vue.js with LiveView using LiveVue
+- Learn about optimization techniques for server-client communication
+- Gain insights into architectural decisions when mixing frameworks
+- Take away practical strategies for gradually introducing frontend libraries into existing LiveView applications
+
+# Prerequisites
+
+# About the conference
+
+Europe's largest Elixir Conference
+Every year, hundreds of developers with a passion for Elixir come together to learn about, share and inspire the progression of the Elixir ecosystem.
+Our events frequently include members of the core teams of Elixir's biggest frameworks and are a hub for the announcement of new features and developments. Whether you're new to Elixir or a seasoned Elixir developer there is something for everyone at ElixirConf EU. From in-depth Elixir training for all skill levels to immersive keynotes that bring you to the forefront of Elixir development, we are actively championing the continued growth of the Elixir community.
+
+
+# Possible QA after the talk
+- What are the trade-offs of this approach?
+- How does this work with the new LiveView streaming?
+- What about the DX of this approach?\
+
+# Speaker Biography
+A seasoned developer with over 12 years of experience across Python, JavaScript, and Elixir. I've worn many hats - from team leader to entrepreneur. Currently, I'm building Postline.ai, an AI-powered platform that heavily utilizes LiveView and LiveVue. As the creator of LiveVue and maintainer of the Readability library, I'm passionate about bringing the best practices from various technologies into the Elixir ecosystem. My journey through different technologies and startups has taught me the importance of choosing the right tool for the job - and sometimes that means building the tool yourself.
+

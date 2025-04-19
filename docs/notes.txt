@@ -1,0 +1,14 @@
+Loose notes on the conference talk
+
+- Elixir LiveView allows for declarative, server-rendered, and stateful UI
+- Devs are used to working with declarative UIs like React, Vue, etc
+- Using Phoenix JS module or hooks feels like a step back - it's imperative and not declarative
+- Hooks are separate from the component, shared across the whole app - it's hard to create a small hook needed just for a given view
+- Examples: complex forms, dialogs, accessibility, Animations. What are some other nice examples?
+- Why not to use Phoenix LiveView to synchronize props of a frontend component, and leave rendering and client-side logic to it?
+- Then all pieces have their own proper place - server side state is transparently synchronized with the client side state, and client side can be declaratively written in a way we're used to.
+- First done by LiveSvelte, next by my library LiveVue, there's also LiveReact.
+- Devil in the details - SSR, DX, sending events & handling responses etc
+- Can be used as an isolated component in the LiveView (eg rich text editor) or a full, interia-style app with one frotnend component per page
+- Middle greound doesn't work well - mostly because of duplication of components & consistency issues.
+
