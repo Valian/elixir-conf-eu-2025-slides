@@ -1,17 +1,29 @@
-import path from "path"
-import { defineConfig } from "vite"
+import path from "path";
+import { defineConfig } from "vite";
 
-import vue from "@vitejs/plugin-vue"
-import liveVuePlugin from "live_vue/vitePlugin"
+import vue from "@vitejs/plugin-vue";
+import liveVuePlugin from "live_vue/vitePlugin";
+import prismjs from "vite-plugin-prismjs";
+import svgLoader from "vite-svg-loader";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
-  const isDev = command !== "build"
+  const isDev = command !== "build";
 
   return {
     base: isDev ? undefined : "/assets",
     publicDir: "static",
-    plugins: [vue(), liveVuePlugin()],
+    plugins: [
+      vue(),
+      liveVuePlugin(),
+      svgLoader(),
+      prismjs({ languages: ["elixir", "javascript", "html"], theme: "default", css: true }),
+    ],
+    server: isDev // Conditionally add server options for dev mode
+      ? {
+          origin: "http://localhost:5173", // Vite will prepend this to generated asset URLs
+        }
+      : undefined,
     worker: {
       format: "es",
     },
@@ -52,5 +64,5 @@ export default defineConfig(({ command }) => {
         },
       },
     },
-  }
-})
+  };
+});

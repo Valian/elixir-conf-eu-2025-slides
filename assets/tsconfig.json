@@ -23,9 +23,11 @@
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true,
 
+      "baseUrl": ".",
       "paths": {
-        "@/*": ["./*"]
+        "@/*": ["./*"],
+        "vue": ["./node_modules/vue"]
       }
     },
-    "include": ["js/**/*.ts", "js/**/*.js", "js/**/*.tsx", "vue/**/*.vue"],
+    "include": ["js/**/*.ts", "js/**/*.js", "js/**/*.tsx", "vue/**/*.vue", "vue/**/*.ts"],
   }

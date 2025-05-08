@@ -28,6 +28,7 @@
   "\u0000/Users/jakub/Projects/elixirconf_live_vue/assets/node_modules/vue/dist/vue.cjs.prod.js?commonjs-exports": [],
   "\u0000/Users/jakub/Projects/elixirconf_live_vue/assets/node_modules/vue/index.js?commonjs-module": [],
   "\u0000commonjsHelpers.js": [],
+  "\u0000plugin-vue:export-helper": [],
   "../deps/live_vue/priv/static/app.js": [],
   "../deps/live_vue/priv/static/server.js": [],
   "../deps/live_vue/priv/static/utils.js": [],
@@ -61,6 +62,7 @@
   "node_modules/vue/dist/vue.cjs.prod.js": [],
   "node_modules/vue/dist/vue.runtime.esm-bundler.js": [],
   "node_modules/vue/index.js": [],
+  "vue/ConferenceSlides.vue": [],
   "vue/Counter.vue": [],
   "vue/Counter.vue?vue&type=script&setup=true&lang.ts": [],
   "vue/index.js": []

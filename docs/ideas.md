@@ -41,3 +41,8 @@ This document outlines potential examples and interactive elements for the LiveV
 *   **Instructions:** Use QR codes and short URLs.
 *   **Reliability:** Ensure the core talk doesn't *depend* on the interaction working perfectly. It's a bonus.
 *   **Performance:** Consider basic server-side throttling for `handle_event`.
+
+# my ideas
+- emojis going up like in a google meet
+- something with LLM - maybe drawing and guessing game? Or creation of SVGs and displaying next to it?
+-

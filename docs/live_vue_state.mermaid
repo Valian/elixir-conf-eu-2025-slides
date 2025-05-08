@@ -1,0 +1,29 @@
+graph TD
+    subgraph Server (LiveView)
+        direction LR
+        LV_State[Socket Assigns (Server State)]
+        LV_Handle[handle_event]
+        LV_Render[render]
+    end
+
+    subgraph Client
+        direction LR
+        JS_Hook[LiveVue Hook]
+        Vue_Comp[Vue Component]
+        Vue_State[Local Client State]
+    end
+
+    Client_Event[User Event on Vue Component] --> Vue_Comp
+    Vue_Comp -- Updates local state --> Vue_State
+    Vue_Comp -- Emits event (JS.push) --> JS_Hook
+    JS_Hook --> LV_Handle
+
+    LV_Handle -- Updates assigns --> LV_State
+    LV_State -- Triggers re-render --> LV_Render
+    LV_Render -- Sends props --> JS_Hook
+    JS_Hook -- Updates props --> Vue_Comp
+    Vue_Comp -- Reacts to props --> Vue_Comp
+
+    style LV_State fill:#f9f,stroke:#333,stroke-width:2px
+    style Vue_State fill:#ccf,stroke:#333,stroke-width:2px
+```

@@ -17,7 +17,8 @@ defmodule ElixirconfLiveVueWeb.Router do
   scope "/", ElixirconfLiveVueWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/slides", SlidesLive
+    live "/slides/:slide_number", SlidesLive
   end
 
   # Other scopes may use custom stacks.

@@ -17,20 +17,23 @@
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html";
+import "../css/app.css";
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "topbar";
 import { getHooks } from "live_vue";
-import liveVueApp from "../vue";
+import liveVueApp from "../vue/index.ts";
 
-let csrfToken = document
-  .querySelector("meta[name='csrf-token']")
-  .getAttribute("content");
+let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+const hooks = getHooks(liveVueApp);
+
+console.log(hooks);
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: getHooks(liveVueApp),
+  hooks: { ...hooks },
 });
 
 // Show progress bar on live navigation and form submits

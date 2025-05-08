@@ -1,0 +1,14 @@
+graph TD
+    A[Client: Initial HTTP Request] --> B(Server: Stateless Render);
+    B --> C{Server State Initialized (mount/3)};
+    C --> D[Server: Send Static HTML];
+    D --> E(Client: Render Static HTML);
+    E --> F[Client: Connect WebSocket];
+    F --> G{Server: Stateful LiveView Process Starts};
+    G -- Sync State --> H(Server State Kept in Socket Assigns);
+    H -- Renders View --> I[Server: Push HTML Diff];
+    I --> J(Client: Patch DOM);
+    J -- User Event --> K{Server: Handle Event};
+    K -- Updates State --> H;
+
+    style H fill:#f9f,stroke:#333,stroke-width:2px

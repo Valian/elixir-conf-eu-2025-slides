@@ -83,4 +83,5 @@ config :swoosh, :api_client, false
 # Configure LiveVue
 config :live_vue,
   vite_host: "http://localhost:5173",
-  ssr_module: LiveVue.SSR.ViteJS
+  ssr_module: LiveVue.SSR.ViteJS,
+  ssr: false
