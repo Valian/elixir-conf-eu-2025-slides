@@ -17,8 +17,8 @@ defmodule ElixirconfLiveVueWeb.Router do
   scope "/", ElixirconfLiveVueWeb do
     pipe_through :browser
 
-    live "/slides", SlidesLive
-    live "/slides/:slide_number", SlidesLive
+    live "/", SlidesLive
+    live "/:slide_number", SlidesLive
   end
 
   # Other scopes may use custom stacks.

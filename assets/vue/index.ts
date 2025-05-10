@@ -54,3 +54,32 @@ export function useLiveEvent<T>(event: string, callback: (data: T) => void) {
     callbackRef = null;
   });
 }
+
+// Create a composable for navigation
+export const usePhxNavigation = () => {
+  const live = useLiveVue();
+  const liveSocket = live?.liveSocket;
+
+  if (!liveSocket) console.error("LiveSocket not initialized");
+
+  const patch = (
+    hrefOrQueryParams: string | Record<string, string>,
+    opts: { replace?: boolean; event?: Event } = {}
+  ) => {
+    let href = typeof hrefOrQueryParams === "string" ? hrefOrQueryParams : window.location.pathname;
+    if (typeof hrefOrQueryParams === "object") {
+      const queryParams = new URLSearchParams(hrefOrQueryParams);
+      href = `${href}?${queryParams.toString()}`;
+    }
+    liveSocket.pushHistoryPatch(opts.event || new Event("click"), href, opts.replace ? "replace" : "push", null);
+  };
+
+  const navigate = (href: string, opts: { replace?: boolean; event?: Event } = {}) => {
+    liveSocket.historyRedirect(opts.event || new Event("click"), href, opts.replace ? "replace" : "push", null, null);
+  };
+
+  return {
+    patch,
+    navigate,
+  };
+};

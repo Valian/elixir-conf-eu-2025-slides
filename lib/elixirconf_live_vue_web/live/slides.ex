@@ -22,21 +22,13 @@ defmodule ElixirconfLiveVueWeb.SlidesLive do
   end
 
   def handle_params(params, _uri, socket) do
-    slide =
-      case params do
-        %{"slide_number" => slide_number} ->
-          String.to_integer(slide_number)
+    case Integer.parse(params["slide_number"] || "") do
+      {slide_number, _} ->
+        {:noreply, assign(socket, currentSlide: slide_number - 1)}
 
-        _ ->
-          1
-      end
-
-    {:noreply, assign(socket, currentSlide: slide - 1)}
-  end
-
-  def handle_event("slide-change", %{"direction" => direction}, socket) do
-    {:noreply,
-     assign(socket, currentSlide: max(min(socket.assigns.currentSlide + direction, 25), 0))}
+      :error ->
+        {:noreply, push_patch(socket, to: "/1")}
+    end
   end
 
   def handle_event("inc", %{"diff" => value}, socket) do

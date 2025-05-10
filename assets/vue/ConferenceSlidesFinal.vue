@@ -15,11 +15,14 @@ import diagramLiveViewInitial from "@/images/diagram_live_view_initial.png";
 import diagramLiveViewFinal from "@/images/diagram_live_view_final.png";
 import hooks from "@/images/diagram_hooks.png";
 import whyNotBoth from "@/images/why-not-both-why-not.gif";
+import { usePhxNavigation } from "./index.ts";
 
 const props = defineProps<{
   currentSlide: number;
   count: number;
 }>();
+
+const { patch } = usePhxNavigation();
 
 watch(
   () => props.currentSlide,
@@ -32,13 +35,9 @@ watch(
   }
 );
 
-const emits = defineEmits<{
-  (e: "slide-change", params: { direction: 1 | -1 }): void;
-}>();
-
 useSlideAnimation({
-  totalSteps: 30,
-  onSlideChange: (direction) => emits("slide-change", { direction }),
+  totalSteps: 50,
+  onSlideChange: (direction) => patch(`/${props.currentSlide + direction + 1}`),
 });
 </script>
 
