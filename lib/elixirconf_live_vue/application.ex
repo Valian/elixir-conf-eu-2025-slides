@@ -9,14 +9,16 @@ defmodule ElixirconfLiveVue.Application do
   def start(_type, _args) do
     children = [
       ElixirconfLiveVueWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:elixirconf_live_vue, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:elixirconf_live_vue, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ElixirconfLiveVue.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: ElixirconfLiveVue.Finch},
       # Start a worker by calling: ElixirconfLiveVue.Worker.start_link(arg)
       # {ElixirconfLiveVue.Worker, arg},
       # Start to serve requests, typically the last entry
-      ElixirconfLiveVueWeb.Endpoint
+      ElixirconfLiveVueWeb.Endpoint,
+      ElixirconfLiveVueWeb.Presence
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

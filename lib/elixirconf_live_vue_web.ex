@@ -17,7 +17,7 @@ defmodule ElixirconfLiveVueWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts favicon.ico robots.txt)
+  def static_paths, do: ~w(assets fonts favicon.ico robots.txt img)
 
   def router do
     quote do

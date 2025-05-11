@@ -6,23 +6,65 @@ import { useSlideAnimation } from "@/js/useSlideAnimation";
 import ExampleCounter from "@/vue/components/ExampleCounter.vue";
 import EmojiDisplay from "@/vue/components/EmojiDisplay.vue";
 import * as snippets from "./snippets.ts";
+import QrcodeVue from "qrcode.vue";
 
 import svelte from "@/images/svelte.png";
 import react from "@/images/react.png";
 import vue from "@/images/vue.png";
+import phoenix from "@/images/phoenix.svg?url";
 import diagramSpa from "@/images/diagram_spa.png";
+import isolatedExample from "@/images/isolated_example.png";
+import exclusiveExample from "@/images/exclusive_example.png";
+import mixingExample from "@/images/mixing_example.png";
+import postlineColocation from "@/images/colocation.png";
+import postlineExample from "@/images/postline_example.png";
 import diagramLiveViewInitial from "@/images/diagram_live_view_initial.png";
 import diagramLiveViewFinal from "@/images/diagram_live_view_final.png";
+import diagramLiveVue from "@/images/diagram_live_vue.png";
+import me from "@/images/foto_small.jpeg";
 import hooks from "@/images/diagram_hooks.png";
+import vueSigil from "@/images/vue_sigil.png";
 import whyNotBoth from "@/images/why-not-both-why-not.gif";
 import { usePhxNavigation } from "./index.ts";
+import ExampleChart from "./components/ExampleChart.vue";
+import { useStorage } from "@vueuse/core";
 
 const props = defineProps<{
   currentSlide: number;
   count: number;
+  timeseriesData: { value: number; time: number }[];
+  watchersEndpoint: string;
 }>();
 
+const featureCards = [
+  {
+    emoji: "⚡",
+    title: "End-To-End Reactivity",
+    description: "Seamless integration with LiveView for real-time updates",
+  },
+  {
+    emoji: "🔋",
+    title: "Server-Side Rendered",
+    description: "Vue components rendered on the server for optimal performance",
+  },
+  { emoji: "🐌", title: "Lazy-loading", description: "Load Vue components on-demand for faster initial page loads" },
+  { emoji: "🪄", title: "~V Sigil", description: "Alternative LiveView DSL for inline Vue components" },
+  {
+    emoji: "🦄",
+    title: "Phoenix utilities",
+    description: "Access to Phoenix helpers, links, events, and form handling",
+  },
+  { emoji: "💀", title: "Dead View Support", description: "Use Vue components in both live and dead views" },
+  {
+    emoji: "🦥",
+    title: "Slot Interoperability",
+    description: "Pass content from Phoenix to Vue components using slots",
+  },
+  { emoji: "🚀", title: "Amazing DX", description: "Excellent developer experience with Vite integration" },
+];
+
 const { patch } = usePhxNavigation();
+const qrcodeSize = useStorage("qrcodeSize", 500);
 
 watch(
   () => props.currentSlide,
@@ -37,7 +79,7 @@ watch(
 
 useSlideAnimation({
   totalSteps: 50,
-  onSlideChange: (direction) => patch(`/${props.currentSlide + direction + 1}`),
+  onSlideChange: (direction) => patch(`/slides/${props.currentSlide + direction + 1}`),
 });
 </script>
 
@@ -48,16 +90,23 @@ useSlideAnimation({
       <h2 class="text-center text-white">Jakub @Valian Skałecki</h2>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 1" variant="default">
-      <h1>About me</h1>
-      <p>Based in Warsaw, Poland</p>
-      <p>~10 years as a Python full-stack developer</p>
-      <p>~3 years with Elixir</p>
-      <p>- Author of <a href="https://github.com/valian/livevue" target="_blank"> LiveVue </a></p>
-      <p>
-        - Currently building a startup with Elixir called
-        <a href="https://postline.ai" target="_blank">Postline.ai</a>
-      </p>
-      <p>- Always on a lookout for the "perfect" developer experience</p>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <h1>About me</h1>
+          <p>Based in Warsaw, Poland</p>
+          <p>~10 years as a Python full-stack developer</p>
+          <p>~3 years with Elixir</p>
+          <p>- Author of <a href="https://github.com/valian/livevue" target="_blank"> LiveVue </a></p>
+          <p>
+            - Currently building a startup with Elixir called
+            <a href="https://postline.ai" target="_blank">Postline.ai</a>
+          </p>
+          <p>- Always on a lookout for the "perfect" developer experience</p>
+        </div>
+        <div class="flex items-center">
+          <img :src="me" class="object-cover aspect-square max-h-64 rounded-full border-8 border-yellow-300" />
+        </div>
+      </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 2" variant="default">
       <h1>Let's quickly talk about SPAs</h1>
@@ -87,15 +136,16 @@ useSlideAnimation({
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 5" variant="default">
       <h1>Phoenix LiveView: The Stateful Server-Side Revolution</h1>
+      <!-- TODO - logo  -->
       <p>- Simplified state synchronization</p>
       <p>- No API routes to maintain</p>
       <p>- Almost not JS necessary</p>
       <p>- Great productivity</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 6" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 6" variant="default" center>
       <img :src="diagramLiveViewInitial" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 7" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 7" variant="default" center>
       <img :src="diagramLiveViewFinal" />
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 8" variant="default">
@@ -108,21 +158,22 @@ useSlideAnimation({
       <p>- Integrating 3rd-party JS libraries</p>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 9" variant="default">
+      <!-- TODO - add some snippet here -->
       <h1>Official solution = %JS{} and hooks</h1>
       <p>- phx-hook creates a javascript object tied to the DOM object</p>
       <p>- mounted, updated, destroyed</p>
 
       <p class="mt-12">Cons</p>
       <p>- a single hook per element</p>
-      <p>- biggest problem - it’s imperative and detached from HEEX</p>
+      <p>- biggest problem - it's imperative and detached from HEEX</p>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 10" variant="default" center>
       <img :src="hooks" />
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 11" variant="default" center>
-      <blockquote class="text-4xl italic border-l-4 border-gray-400 text-gray-800 pl-6 py-2">
-        "Generally writing JS hooks makes the code a little tricky to reason about. <br />When you start to have a lot
-        of JS it ends up having similar problems to jquery."
+      <blockquote class="text-5xl italic border-l-4 border-gray-400 text-gray-800 pl-6 py-2 max-w-5xl">
+        "Generally writing JS hooks makes the code a little tricky to reason about. <br /><br />When you start to have a
+        lot of JS it ends up having similar problems to jquery."
       </blockquote>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 11" variant="default">
@@ -138,73 +189,149 @@ useSlideAnimation({
           <p>- imperative client-side rendering</p>
           <p>- latency cost for things that might not need it</p>
           <p>- no clear place for client-side state</p>
+          <p>- little JS</p>
         </div>
         <div class="bg-gray-100 p-4 rounded-md">
           <h2>SPA</h2>
           <p>- state primarily on the client</p>
+          <p>- declarative client-side rendering</p>
           <p>- requires API</p>
           <p>- complex client-side state management</p>
+          <p>- lots of JS</p>
         </div>
       </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 13" variant="default" center>
       <img :src="whyNotBoth" class="h-1/2" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 14" variant="default" center>
-      <pre><code class="language-html">{{ snippets.liveVueCode }}</code></pre>
+    <SlideTemplate v-if="props.currentSlide === 14" variant="default">
+      <div class="flex justify-center items-center h-full">
+        <div class="flex flex-col text-5xl gap-12">
+          <div class="flex gap-4 items-center">
+            <img :src="phoenix" class="object-fit max-h-32" />
+            <span>+</span>
+            <img :src="svelte" class="object-fit max-w-32" />
+            <span>=&nbsp;LiveSvelte</span>
+          </div>
+          <div class="flex gap-4 items-center">
+            <img :src="phoenix" class="object-fit max-h-32" />
+            <span>+</span>
+            <img :src="vue" class="object-fit max-w-32" />
+            <span>=&nbsp;LiveVue</span>
+          </div>
+          <div class="flex gap-4 items-center">
+            <img :src="phoenix" class="object-fit max-h-32" />
+            <span>+</span>
+            <img :src="react" class="object-fit max-w-32" />
+            <span>=&nbsp;LiveReact</span>
+          </div>
+        </div>
+      </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 15" variant="default" center>
-      <pre><code class="language-elixir">{{ snippets.liveVueHeexCode }}</code></pre>
+      <img :src="diagramLiveVue" class="h-1/2" />
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 16" variant="default" center>
+      <pre><code class="language-html">{{ snippets.liveVueCode }}</code></pre>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 17" variant="default" center>
+      <pre><code class="language-elixir">{{ snippets.liveVueHeexCode }}</code></pre>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 18" variant="default" center>
       <div class="p-8 rounded-lg bg-gray-100 flex flex-col gap-6 text-3xl">
         <ExampleCounter :count="props.count" />
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 17" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 19" variant="default">
       <h1>How it works under the hood?</h1>
       <pre><code class="language-elixir">{{ snippets.liveVueRenderCode }}</code></pre>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 18" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 20" variant="default">
       <h1>How it works under the hood?</h1>
       <div class="flex justify-center items-center mt-8">
         <pre><code class="language-javascript">{{ snippets.liveVueHookCode }}</code></pre>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 19" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 21" variant="default">
       <h1>How it works under the hood?</h1>
       <div class="flex justify-center items-center mt-8">
         <pre><code class="language-javascript">{{ snippets.liveVueResolveCode }}</code></pre>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 20" variant="default">
-      <h1>What's inside?</h1>
-      <p>- SSR support</p>
-      <p>- Hot Reload in development</p>
-      <p>- Code splitting</p>
-      <p>- HEEX slots</p>
-      <p>- Vue sigil</p>
-      <p>- Payload optimizations</p>
-      <p>- Handlers for component reuse</p>
-      <p>- utilities for forms, events etc</p>
-    </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 21" variant="default">
-      <!-- TODO - add a diagram here -->
-      <h1>Integration tips & tricks</h1>
-      <p>1. A few, isolated client-side components - Rich text editor, live preview etc</p>
-      <p>2. One top-level Vue component per live view - Inertia.js approach</p>
-
-      <p class="mt-12">Mixing Vue and HEEX components is not perfect:</p>
-      <p>- duplication of common components (buttons, inputs etc)</p>
-      <p>- SSR might get slow - synchronous execution</p>
-    </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 22" variant="default">
-      <h1>Integration tips & tricks</h1>
-      <p>TODO: screenshot of the postline colocation</p>
+      <h1>What's inside?</h1>
+      <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+        <div v-for="card in featureCards" :key="card.title" class="rounded-lg bg-amber-50 p-6">
+          <div class="text-5xl mb-2">{{ card.emoji }}</div>
+          <h3 class="text-4xl font-semibold mb-2 text-pink-600">{{ card.title }}</h3>
+          <p class="text-2xl text-slate-600">{{ card.description }}</p>
+        </div>
+      </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 23" variant="default">
+      <!-- TODO - add a diagram here -->
+      <h1>Integration tips & tricks</h1>
+      <div class="grid grid-cols-2 gap-4 mt-8">
+        <div class="text-center">
+          <p class="font-bold">A few, isolated client-side components</p>
+          <p class="text-gray-500">Rich text editor, live preview etc</p>
+          <img :src="isolatedExample" class="mt-8" />
+        </div>
+        <div class="text-center">
+          <p class="font-bold">Top-level Vue component per live view</p>
+          <p class="text-gray-500">Interia.js approach</p>
+          <img :src="exclusiveExample" class="mt-8" />
+        </div>
+      </div>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 24" variant="default">
+      <!-- TODO - add a diagram here -->
+      <h1>Integration tips & tricks</h1>
+      <div class="text-center">
+        <p class="font-bold">Mixing Vue and HEEX components is not perfect</p>
+        <p class="text-gray-500">duplication of common components (buttons, inputs etc)</p>
+        <p class="text-gray-500">SSR might get slow - synchronous execution</p>
+        <img :src="mixingExample" class="mt-8 w-1/2 mx-auto" />
+      </div>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 25" variant="default">
+      <h1>Integration tips & tricks - colocation</h1>
+      <img :src="postlineColocation" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 26" variant="default">
+      <h1>Integration tips & tricks - colocation</h1>
+      <img :src="postlineExample" class="max-h-[75vh] mx-auto aspect-auto" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 27" variant="default">
+      <h1>Integration tips & tricks - Vue sigil</h1>
+      <img :src="vueSigil" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
+      <h1>Drawbacks</h1>
+      <p>- JSON serialization is necessary, either global implementation of `Jason.encode/2` or mapping functions</p>
+      <p>- Testing is more complex</p>
+      <p>- JS bundle size will increase</p>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 29" variant="default" center>
+      <h1>Demo time! QR code</h1>
+      <QrcodeVue :value="props.watchersEndpoint" level="H" :size="qrcodeSize" class="w-full h-full" />
+      <input type="range" v-model="qrcodeSize" min="100" max="500" class="mt-8" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 30" variant="default">
       <h1>Demo time! Emojis 😍</h1>
       <EmojiDisplay />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 31" variant="default">
+      <h1>Demo time! Online users 😍</h1>
+      <ExampleChart :data="props.timeseriesData" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 32" variant="default">
+      <h1>Summary</h1>
+      <p>- Clear place for declarative client-side state</p>
+      <p>- Access to vast ecosystem of frontend libraries</p>
+      <p>- Easy to hire Vue / React / Svelte developers</p>
+      <p>- LLMs are better at it than HEEX 🦾</p>
+      <p>- Great DX</p>
     </SlideTemplate>
   </div>
 </template>
@@ -238,6 +365,10 @@ ul ul {
 
 li {
   @apply mb-2;
+}
+code[class*="language-"],
+pre[class*="language-"] {
+  @apply text-3xl;
 }
 
 a {

@@ -7,7 +7,7 @@ type EmojiState = {
   id: string;
   emoji: string;
   timeOfAppearance: number;
-  xPos: string;
+  xPos: number;
   speed: number;
   size: string;
 };
@@ -28,12 +28,19 @@ const addRandomEmoji = () => {
 useLiveEvent("add-emoji", ({ emoji }: { emoji: string }) => addEmoji(emoji));
 
 const addEmoji = (emoji: string) => {
+  const containerWidth = containerRef.value?.clientWidth;
+  if (!containerWidth) {
+    // Fallback or error handling if containerRef is not yet available or has no width
+    console.warn("Emoji container width is not available.");
+    return;
+  }
+
   const newEmoji = {
     id: `emoji-${nextId++}`,
     emoji,
     size: `${Math.random() * 100 + 50}px`, // size in pixels, from 50px to 150px
     timeOfAppearance: now.value.getTime(), // milliseconds
-    xPos: `${Math.random() * 90 + 5}vw`, // position in vw, from 5vw to 95vw
+    xPos: (Math.random() * 0.9 + 0.05) * containerWidth, // position in pixels, from 5% to 95% of container width
     speed: Math.random() * 100 + 75, // speed in pixels per second, from 75px/s to 175px/s
   };
   activeEmojis.value.push(newEmoji);
@@ -49,10 +56,6 @@ const computedEmojis = computed(() => {
     ...emoji,
     yPos: calculateYPosition(emoji),
   }));
-});
-
-watchEffect(() => {
-  if (computedEmojis.value.length > 0) console.log(computedEmojis.value[0].yPos);
 });
 
 watchEffect(() => {
@@ -72,7 +75,7 @@ watchEffect(() => {
       :key="emoji.id"
       class="emoji"
       :style="{
-        transform: `translate(${emoji.xPos}, -${emoji.yPos}px)`,
+        transform: `translate(${emoji.xPos}px, -${emoji.yPos}px)`,
         left: `0`,
         bottom: `0`,
         fontSize: emoji.size,

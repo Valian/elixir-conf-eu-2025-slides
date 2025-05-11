@@ -1,5 +1,4 @@
-export const liveVueCode = `
-<script setup lang="ts">
+export const liveVueCode = `<script setup lang="ts">
 import { ref } from "vue";
 
 // props come from the server
@@ -21,8 +20,7 @@ const diff = ref(1);
 </template>
 `;
 
-export const liveVueHeexCode = `
-defmodule LiveVueExamplesWeb.LiveCounter do
+export const liveVueHeexCode = `defmodule LiveVueExamplesWeb.LiveCounter do
   use LiveVueExamplesWeb, :live_view
 
   def render(assigns) do
@@ -74,12 +72,14 @@ export const liveVueHookCode = `const LiveVueHook = {
   },
   updated() {
     Object.assign(this.vue.props, getProps(this.el, this.liveSocket))
+  },
+  destroyed() {
+    this.vue.app.unmount()
   }
 }
 `;
 
 export const liveVueResolveCode = `export default createLiveVue({
-  // name will be passed as-is in v-component of the .vue HEEX component
   resolve: name => {
     const components = import.meta.glob("./**/*.vue", { eager: true })
 
@@ -87,7 +87,6 @@ export const liveVueResolveCode = `export default createLiveVue({
     return findComponent(components, name)
   },
 
-  // it's a default implementation of creating and mounting vue app
   setup: ({ createApp, component, props, slots, plugin, el }) => {
     const app = createApp({ render: () => h(component, props, slots) })
     app.use(plugin)
