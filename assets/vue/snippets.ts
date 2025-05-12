@@ -97,3 +97,22 @@ export const liveVueResolveCode = `export default createLiveVue({
   },
 })
 `;
+
+export const complexLiveViewHookCode = `mounted() {
+  this.applyHighlight();
+  const statusEl = document.createElement('div');
+  this.el.appendChild(statusEl);
+  this.el.addEventListener('mouseenter', () => {
+    statusEl.textContent = this.el.dataset.highlight === "true" ? "on" : "off";
+  });
+},
+updated() {
+  this.applyHighlight();
+},
+applyHighlight() {
+  if (this.el.dataset.highlight === "true") {
+    this.el.classList.add("text-yellow-500", "font-bold");
+  } else {
+    this.el.classList.remove("text-yellow-500", "font-bold");
+  }
+}`;

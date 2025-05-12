@@ -69,12 +69,10 @@ defmodule ElixirconfLiveVue.MixProject do
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["cmd --cd assets npm install"],
       "assets.build": [
-        "cmd --cd assets npm run build",
-        "cmd --cd assets npm run build-server"
+        "cmd --cd assets npm run build"
       ],
       "assets.deploy": [
         "cmd --cd assets npm run build",
-        "cmd --cd assets npm run build-server",
         "phx.digest"
       ]
     ]
