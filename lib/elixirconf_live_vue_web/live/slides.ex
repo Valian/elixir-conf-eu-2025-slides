@@ -13,21 +13,13 @@ defmodule ElixirconfLiveVueWeb.SlidesLive do
       watchersEndpoint={ElixirconfLiveVueWeb.Endpoint.url() <> "/watchers"}
       v-component="ConferenceSlidesFinal"
       v-socket={@socket}
-      v-on:slide-change={JS.push("slide-change")}
     />
     """
   end
 
   def mount(_params, _session, socket) do
-    user_id = Base.encode16(:crypto.strong_rand_bytes(16))
-
     if connected?(socket) do
       ElixirconfLiveVueWeb.Endpoint.subscribe(@presence_topic)
-
-      Presence.track(self(), @presence_topic, "user:" <> user_id, %{
-        online_at: System.system_time(:second)
-      })
-
       send(self(), :loop)
     end
 
@@ -36,8 +28,7 @@ defmodule ElixirconfLiveVueWeb.SlidesLive do
        count: 0,
        currentSlide: 0,
        timeseries_data: [],
-       online_users: 0,
-       user_id: user_id,
+       online_users: Presence.list(@presence_topic) |> map_size(),
        start_time: DateTime.to_unix(DateTime.utc_now())
      )}
   end

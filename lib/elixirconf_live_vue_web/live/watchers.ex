@@ -6,7 +6,7 @@ defmodule ElixirconfLiveVueWeb.WatchersLive do
 
   def render(assigns) do
     ~H"""
-    <div class="h-screen bg-gray-800 flex flex-col items-center p-4 text-white">
+    <div class="h-[100dvh] bg-gray-800 flex flex-col items-center p-4 text-white">
       <!-- Main Content: centered and takes up available space -->
       <div class="flex-grow flex flex-col items-center justify-center">
         <h1 class="text-4xl font-bold mb-12">Send an Emoji!</h1>

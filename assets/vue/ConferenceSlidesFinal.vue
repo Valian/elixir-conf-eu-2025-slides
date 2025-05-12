@@ -13,6 +13,7 @@ import react from "@/images/react.png";
 import vue from "@/images/vue.png";
 import phoenix from "@/images/phoenix.svg?url";
 import diagramSpa from "@/images/diagram_spa.png";
+import diagramSpaThumbs from "@/images/diagram_spa_thumbs.png";
 import isolatedExample from "@/images/isolated_example.png";
 import exclusiveExample from "@/images/exclusive_example.png";
 import mixingExample from "@/images/mixing_example.png";
@@ -115,6 +116,7 @@ useSlideAnimation({
       <p>- No latency unless new data is needed</p>
       <p>- Mobile-like feel</p>
       <p>- Offline capabilities</p>
+      <p class="text-red-500">- Complex to implement</p>
 
       <div class="flex flex-row gap-4 mt-12">
         <img :src="vue" class="object-fit max-h-64" />
@@ -125,15 +127,8 @@ useSlideAnimation({
     <SlideTemplate v-if="props.currentSlide === 3" variant="default" center>
       <img :src="diagramSpa" class="" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 4" variant="default">
-      <h1>The tale of two states</h1>
-      <p>The core of an SPA is its client-side state management and reliance on APIs.</p>
-      <p>It imposes certain complexity on the developer.</p>
-      <p>- design & maintain API routes</p>
-      <p>- global client-side state - Redux, Vuex etc</p>
-      <p>- desyncs</p>
-      <p>- SEO</p>
-      <p>- JS ecosystem fatigue & bundle size</p>
+    <SlideTemplate v-if="props.currentSlide === 4" variant="default" center>
+      <img :src="diagramSpaThumbs" class="" />
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 5" variant="default">
       <h1>Phoenix LiveView: The Stateful Server-Side Revolution</h1>
@@ -142,7 +137,7 @@ useSlideAnimation({
         <div>
           <p>- Simplified state synchronization</p>
           <p>- No API routes to maintain</p>
-          <p>- Almost not JS necessary</p>
+          <p>- Almost no JS necessary</p>
           <p>- Great productivity</p>
         </div>
         <div class="flex items-center justify-left">
@@ -158,22 +153,22 @@ useSlideAnimation({
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 8" variant="default">
       <h1>There's always a client-side state</h1>
-      <p>- Not every interaction requires server round-trip</p>
       <p>- Complex form interactions (multi-step, dynamic validation)</p>
       <p>- Smooth, intricate animations & transitions</p>
-      <p>- UI widgets needing instant feedback (sliders, drag-n-drop, maps)</p>
-      <p>- Accessibility (eg aria-attributes)</p>
+      <p>- UI widgets needing instant feedback (sliders, drag-n-drop, maps, charts)</p>
+      <p>- Accessibility (aria-attributes)</p>
       <p>- Integrating 3rd-party JS libraries</p>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 9" variant="default">
       <!-- TODO - add some snippet here -->
-      <h1>Official solution = %JS{} and hooks</h1>
+      <h1>Official solution - LiveView.JS and hooks</h1>
+      <p>- JS injects commands to be executed by the client</p>
       <p>- phx-hook creates a javascript object tied to the DOM object</p>
-      <p>- mounted, updated, destroyed</p>
+      <p>- hook lifecycle: mounted, updated, destroyed</p>
 
-      <p class="mt-12">Cons</p>
+      <p class="mt-12 font-bold">Cons</p>
       <p>- a single hook per element</p>
-      <p>- biggest problem - it's imperative and detached from HEEX</p>
+      <p>- biggest problem - it's imperative and not declarative</p>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 10" variant="default" center>
       <img :src="hooks" />
@@ -237,12 +232,22 @@ useSlideAnimation({
       <img :src="diagramLiveVue" />
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 17" variant="default" center>
-      <pre><code class="language-html">{{ snippets.liveVueCode }}</code></pre>
-    </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 18" variant="default" center>
       <pre><code class="language-elixir">{{ snippets.liveVueHeexCode }}</code></pre>
     </SlideTemplate>
+
+    <SlideTemplate v-if="props.currentSlide === 18" variant="default" center>
+      <pre><code class="language-html">{{ snippets.liveVueCode1 }}</code></pre>
+    </SlideTemplate>
+
     <SlideTemplate v-if="props.currentSlide === 19" variant="default" center>
+      <pre><code class="language-html">{{ snippets.liveVueCode2 }}</code></pre>
+    </SlideTemplate>
+
+    <SlideTemplate v-if="props.currentSlide === 20" variant="default" center>
+      <pre><code class="language-html">{{ snippets.liveVueCode3 }}</code></pre>
+    </SlideTemplate>
+
+    <SlideTemplate v-if="props.currentSlide === 21" variant="default" center>
       <div class="grid grid-cols-3 gap-4">
         <div class="p-8 rounded-lg bg-blue-100 flex flex-col gap-6 text-3xl">
           <p>Server state</p>
@@ -257,23 +262,23 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 20" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 22" variant="default">
       <h1>How it works under the hood?</h1>
       <pre><code class="language-elixir">{{ snippets.liveVueRenderCode }}</code></pre>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 21" variant="default">
-      <h1>How it works under the hood?</h1>
-      <div class="flex justify-center items-center mt-8">
-        <pre><code class="language-javascript">{{ snippets.liveVueHookCode }}</code></pre>
-      </div>
-    </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 22" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 23" variant="default">
       <h1>How it works under the hood?</h1>
       <div class="flex justify-center items-center mt-8">
         <pre><code class="language-javascript">{{ snippets.liveVueResolveCode }}</code></pre>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 23" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 24" variant="default">
+      <h1>How it works under the hood?</h1>
+      <div class="flex justify-center items-center mt-8">
+        <pre><code class="language-javascript">{{ snippets.liveVueHookCode }}</code></pre>
+      </div>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 25" variant="default">
       <h1>What's inside?</h1>
       <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
         <div v-for="card in featureCards" :key="card.title" class="rounded-lg bg-amber-50 p-6">
@@ -283,7 +288,7 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 24" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 26" variant="default">
       <!-- TODO - add a diagram here -->
       <h1>Integration tips & tricks</h1>
       <div class="grid grid-cols-2 gap-4 mt-8">
@@ -299,7 +304,7 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 25" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 27" variant="default">
       <!-- TODO - add a diagram here -->
       <h1>Integration tips & tricks</h1>
       <div class="text-center">
@@ -309,47 +314,64 @@ useSlideAnimation({
         <img :src="mixingExample" class="mt-8 w-1/2 mx-auto" />
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 26" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
       <h1>Integration tips & tricks - colocation</h1>
       <img :src="postlineColocation" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 27" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 29" variant="default">
       <h1>Integration tips & tricks - colocation</h1>
       <img :src="postlineExample" class="max-h-[75vh] mx-auto aspect-auto" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 30" variant="default">
       <h1>Integration tips & tricks - Vue sigil</h1>
       <img :src="vueSigil" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 29" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 31" variant="default">
+      <h1>Phoenix utils - coming soon!</h1>
+      <pre><code class="language-javascript">{{ snippets.liveVueFormCode }}</code></pre>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 32" variant="default">
+      <h1>Phoenix utils - coming soon!</h1>
+      <pre><code class="language-html">{{ snippets.liveVueFormHTML }}</code></pre>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 33" variant="default">
       <h1>Drawbacks</h1>
       <p>- JSON serialization is necessary, either global implementation of `Jason.encode/2` or mapping functions</p>
       <p>- Testing is more complex</p>
       <p>- JS bundle size will increase</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 30" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 34" variant="default" center>
       <h1>Demo time! QR code</h1>
       <QrcodeVue :value="props.watchersEndpoint" level="H" :size="qrcodeSize" class="w-full h-full" />
       <input type="range" v-model="qrcodeSize" min="100" max="500" class="mt-8" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 31" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 35" variant="default">
       <h1>Demo time! Emojis 😍</h1>
       <EmojiDisplay />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 32" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 36" variant="default">
       <h1>Demo time! Online users 😍</h1>
       <ExampleChart :data="props.timeseriesData" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 33" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 37" variant="default">
       <h1>Summary</h1>
       <p>- Clear place for declarative client-side state</p>
       <p>- Access to vast ecosystem of frontend libraries</p>
       <p>- Easy to hire Vue / React / Svelte developers</p>
       <p>- LLMs are better at it than HEEX 🦾</p>
-      <p>- Great DX</p>
+      <p>- Great DX with Vite</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 34" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 38" variant="default">
+      <h1>Future plans</h1>
+      <p>- Igniter installer</p>
+      <p>- Diff optimizations</p>
+      <p>- End to end testing</p>
+      <p>- Utils: Streams</p>
+      <p>- Utils: File uploads</p>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 39" variant="default" center>
       <h1>✨ Thank you! ✨</h1>
+      <p class="text-4xl mb-12">Let's build amazing hybrid apps! 💪</p>
       <p>Questions?</p>
     </SlideTemplate>
   </div>
@@ -367,7 +389,7 @@ h2 {
 }
 
 p {
-  @apply text-4xl mb-4;
+  @apply text-4xl mb-6;
   /* Adjusted size */
 }
 

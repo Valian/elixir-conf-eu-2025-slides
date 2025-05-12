@@ -1,4 +1,26 @@
-export const liveVueCode = `<script setup lang="ts">
+export const liveVueCode1 = `<script setup lang="ts">
+import { ref } from "vue";
+
+// props come from the server
+const props = defineProps<{ count: number }>();
+
+// local state
+const diff = ref(1);
+<\/script>
+
+<template>
+  Current count
+  <div>{{ props.count }}</div>
+  <label>Diff: </label>
+  <input v-model.number="diff" type="range" min="1" max="10" />
+
+  <button phx-click="inc" :phx-value-diff="diff">
+    Increase counter by {{ diff }}
+  </button>
+</template>
+`;
+
+export const liveVueCode2 = `<script setup lang="ts">
 import { ref } from "vue";
 
 // props come from the server
@@ -15,6 +37,29 @@ const diff = ref(1);
   <input v-model.number="diff" type="range" min="1" max="10" />
 
   <button @click="$live.pushEvent('inc', { diff })">
+    Increase counter by {{ diff }}
+  </button>
+</template>
+`;
+
+export const liveVueCode3 = `<script setup lang="ts">
+import { ref } from "vue";
+import { useLiveVue } from "live_vue";
+
+// props come from the server
+const props = defineProps<{ count: number }>();
+const live = useLiveVue();
+
+// local state
+const diff = ref(1);
+const handleClick = () => {
+  live.pushEvent("inc", { diff: diff.value });
+};
+<\/script>
+
+<template>
+  <!-- ... -->
+  <button @click="handleClick">
     Increase counter by {{ diff }}
   </button>
 </template>
@@ -64,14 +109,14 @@ export const liveVueHookCode = `const LiveVueHook = {
   async mounted() {
     const componentName = this.el.getAttribute("data-name")
     const component = await resolve(componentName)
-    const props = reactive(getProps(this.el, this.liveSocket))
+    const props = reactive(JSON.parse(this.el.getAttribute("data-props")))
 
-    const app = createApp({ render: () => h(component, props) });
-    app.mount(this.el);
+    const app = setup({ component, props, el: this.el });
+
     this.vue = { props, app }
   },
   updated() {
-    Object.assign(this.vue.props, getProps(this.el, this.liveSocket))
+    Object.assign(this.vue.props, JSON.parse(this.el.getAttribute("data-props")))
   },
   destroyed() {
     this.vue.app.unmount()
@@ -87,9 +132,8 @@ export const liveVueResolveCode = `export default createLiveVue({
     return findComponent(components, name)
   },
 
-  setup: ({ createApp, component, props, slots, plugin, el }) => {
-    const app = createApp({ render: () => h(component, props, slots) })
-    app.use(plugin)
+  setup: ({ component, props, el }) => {
+    const app = createApp({ render: () => h(component, props) })
     // add your own plugins here
     // app.use(pinia)
     app.mount(el)
@@ -116,3 +160,32 @@ applyHighlight() {
     this.el.classList.remove("text-yellow-500", "font-bold");
   }
 }`;
+
+export const liveVueFormCode = `const { submit, fields, isSubmitting } = useLiveForm(
+  toRef(props, 'form'),
+  {
+    changeEvent: 'validate',
+    submitEvent: 'submit',
+  }
+)
+
+const language = fields['language']
+const instructions = fields['ai']['instructions']
+`;
+
+export const liveVueFormHTML = `<form @submit.prevent="submit">
+  <label for="language">Language</label>
+  <select id="language" v-model="language.value">
+    <option value="en">English</option>
+    <option value="es">Spanish</option>
+  </select>
+
+  <p class="danger" v-if="language.errors.length > 0">
+    {{ language.errorMessage }}
+  </p>
+
+  <button type="submit" :disabled="!form.meta.touched ||!form.meta.valid || isSubmitting">
+    {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+  </button>
+</form>
+`;
