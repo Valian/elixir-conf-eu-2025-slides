@@ -92,10 +92,10 @@ useSlideAnimation({
       <h2 class="text-center text-white">Jakub @Valian Skałecki</h2>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 1" variant="default">
-      <div class="grid grid-cols-2 gap-4">
-        <div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
           <h1>About me</h1>
-          <p>Based in Warsaw, Poland</p>
+          <p>Coming from Warsaw, Poland</p>
           <p>~10 years as a Python full-stack developer</p>
           <p>~3 years with Elixir</p>
           <p>- Author of <a href="https://github.com/valian/livevue" target="_blank"> LiveVue </a></p>
@@ -105,23 +105,27 @@ useSlideAnimation({
           </p>
           <p>- Always on a lookout for the "perfect" developer experience</p>
         </div>
-        <div class="flex items-center">
-          <img :src="me" class="object-cover aspect-square max-h-64 rounded-full border-8 border-yellow-300" />
+        <div class="flex items-center justify-center">
+          <img :src="me" class="object-cover aspect-square max-h-80 rounded-full border-8 border-yellow-300" />
         </div>
       </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 2" variant="default">
       <h1>Let's quickly talk about SPAs</h1>
-      <p>- Dynamic, rich UIs and interactions</p>
-      <p>- No latency unless new data is needed</p>
-      <p>- Mobile-like feel</p>
-      <p>- Offline capabilities</p>
-      <p class="text-red-500">- Complex to implement</p>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
+          <p>- Dynamic, rich UIs and interactions</p>
+          <p>- No latency unless new data is needed</p>
+          <p>- Mobile-like feel</p>
+          <p>- Offline capabilities</p>
+          <p class="text-red-500">- Complex to implement</p>
+        </div>
 
-      <div class="flex flex-row gap-4 mt-12">
-        <img :src="vue" class="object-fit max-h-64" />
-        <img :src="react" class="object-fit max-h-64" />
-        <img :src="svelte" class="object-fit max-h-64" />
+        <div class="flex flex-col gap-4 items-center justify-center">
+          <img :src="vue" class="object-fit max-w-48" />
+          <img :src="react" class="object-fit max-w-48" />
+          <img :src="svelte" class="object-fit max-w-48" />
+        </div>
       </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 3" variant="default" center>
@@ -133,14 +137,14 @@ useSlideAnimation({
     <SlideTemplate v-if="props.currentSlide === 5" variant="default">
       <h1>Phoenix LiveView: The Stateful Server-Side Revolution</h1>
 
-      <div class="grid grid-cols-2 gap-4">
-        <div>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
           <p>- Simplified state synchronization</p>
           <p>- No API routes to maintain</p>
           <p>- Almost no JS necessary</p>
           <p>- Great productivity</p>
         </div>
-        <div class="flex items-center justify-left">
+        <div class="flex items-center justify-center">
           <img :src="phoenix" class="max-h-48" />
         </div>
       </div>
@@ -159,7 +163,10 @@ useSlideAnimation({
       <p>- Accessibility (aria-attributes)</p>
       <p>- Integrating 3rd-party JS libraries</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 9" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 9" variant="default" center>
+      <img :src="postlineExample" class="max-h-[75vh] mx-auto aspect-auto" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 10" variant="default">
       <!-- TODO - add some snippet here -->
       <h1>Official solution - LiveView.JS and hooks</h1>
       <p>- JS injects commands to be executed by the client</p>
@@ -168,22 +175,22 @@ useSlideAnimation({
 
       <p class="mt-12 font-bold">Cons</p>
       <p>- a single hook per element</p>
-      <p>- biggest problem - it's imperative and not declarative</p>
-    </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 10" variant="default" center>
-      <img :src="hooks" />
+      <p>- biggest problem - it's <b>imperative</b> and not <b>declarative</b></p>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 11" variant="default" center>
+      <img :src="hooks" />
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 12" variant="default" center>
       <blockquote class="text-5xl italic border-l-4 border-gray-400 text-gray-800 pl-6 py-2 max-w-5xl">
         "Generally writing JS hooks makes the code a little tricky to reason about. <br /><br />When you start to have a
         lot of JS it ends up having similar problems to jquery."
       </blockquote>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 12" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 13" variant="default">
       <h1>Example of a complex hook</h1>
       <pre><code class="language-javascript">{{ snippets.complexLiveViewHookCode }}</code></pre>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 13" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 14" variant="default">
       <h1>Comparision</h1>
       <div class="grid grid-cols-2 gap-4">
         <div class="bg-orange-100 p-4 rounded-md">
@@ -201,10 +208,10 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 14" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 15" variant="default" center>
       <img :src="whyNotBoth" class="h-1/2" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 15" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 16" variant="default">
       <div class="flex justify-center items-center h-full">
         <div class="flex flex-col text-5xl gap-12">
           <div class="flex gap-4 items-center">
@@ -228,26 +235,26 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 16" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 17" variant="default" center>
       <img :src="diagramLiveVue" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 17" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 18" variant="default" center>
       <pre><code class="language-elixir">{{ snippets.liveVueHeexCode }}</code></pre>
     </SlideTemplate>
 
-    <SlideTemplate v-if="props.currentSlide === 18" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 19" variant="default" center>
       <pre><code class="language-html">{{ snippets.liveVueCode1 }}</code></pre>
     </SlideTemplate>
 
-    <SlideTemplate v-if="props.currentSlide === 19" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 20" variant="default" center>
       <pre><code class="language-html">{{ snippets.liveVueCode2 }}</code></pre>
     </SlideTemplate>
 
-    <SlideTemplate v-if="props.currentSlide === 20" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 21" variant="default" center>
       <pre><code class="language-html">{{ snippets.liveVueCode3 }}</code></pre>
     </SlideTemplate>
 
-    <SlideTemplate v-if="props.currentSlide === 21" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 22" variant="default" center>
       <div class="grid grid-cols-3 gap-4">
         <div class="p-8 rounded-lg bg-blue-100 flex flex-col gap-6 text-3xl">
           <p>Server state</p>
@@ -262,23 +269,23 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 22" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 23" variant="default">
       <h1>How it works under the hood?</h1>
       <pre><code class="language-elixir">{{ snippets.liveVueRenderCode }}</code></pre>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 23" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 24" variant="default">
       <h1>How it works under the hood?</h1>
       <div class="flex justify-center items-center mt-8">
         <pre><code class="language-javascript">{{ snippets.liveVueResolveCode }}</code></pre>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 24" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 25" variant="default">
       <h1>How it works under the hood?</h1>
       <div class="flex justify-center items-center mt-8">
         <pre><code class="language-javascript">{{ snippets.liveVueHookCode }}</code></pre>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 25" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 26" variant="default">
       <h1>What's inside?</h1>
       <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
         <div v-for="card in featureCards" :key="card.title" class="rounded-lg bg-amber-50 p-6">
@@ -288,7 +295,7 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 26" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 27" variant="default">
       <!-- TODO - add a diagram here -->
       <h1>Integration tips & tricks</h1>
       <div class="grid grid-cols-2 gap-4 mt-8">
@@ -304,7 +311,7 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 27" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
       <!-- TODO - add a diagram here -->
       <h1>Integration tips & tricks</h1>
       <div class="text-center">
@@ -314,14 +321,11 @@ useSlideAnimation({
         <img :src="mixingExample" class="mt-8 w-1/2 mx-auto" />
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 29" variant="default">
       <h1>Integration tips & tricks - colocation</h1>
       <img :src="postlineColocation" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 29" variant="default">
-      <h1>Integration tips & tricks - colocation</h1>
-      <img :src="postlineExample" class="max-h-[75vh] mx-auto aspect-auto" />
-    </SlideTemplate>
+
     <SlideTemplate v-if="props.currentSlide === 30" variant="default">
       <h1>Integration tips & tricks - Vue sigil</h1>
       <img :src="vueSigil" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
@@ -379,7 +383,7 @@ useSlideAnimation({
 
 <style>
 h1 {
-  @apply text-5xl font-bold mb-10;
+  @apply text-5xl font-bold mb-14;
   /* Adjusted size */
 }
 
@@ -389,7 +393,7 @@ h2 {
 }
 
 p {
-  @apply text-4xl mb-6;
+  @apply text-5xl mb-10;
   /* Adjusted size */
 }
 

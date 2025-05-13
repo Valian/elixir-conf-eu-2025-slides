@@ -31,12 +31,18 @@ const img = computed(() => {
       >
         <slot />
       </div>
-      <div class="absolute bottom-0 left-0 p-4 flex items-center gap-2 text-gray-600">
+      <div
+        class="absolute bottom-0 left-0 p-4 flex items-center gap-2"
+        :class="variant === 'default' ? 'text-gray-600' : 'text-white'"
+      >
         <img :src="github" class="w-6 h-6" alt="GitHub" />
         <span class="text-2xl">Valian</span>
       </div>
 
-      <div class="absolute bottom-0 right-0 p-4 flex items-center gap-2 text-gray-600">
+      <div
+        class="absolute bottom-0 right-0 p-4 flex items-center gap-2"
+        :class="variant === 'default' ? 'text-gray-600' : 'text-white'"
+      >
         <span class="text-2xl">jskalc</span>
         <img :src="x" class="w-6 h-6" alt="X" />
       </div>
