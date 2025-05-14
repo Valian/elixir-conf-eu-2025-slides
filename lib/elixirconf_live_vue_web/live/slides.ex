@@ -36,7 +36,7 @@ defmodule ElixirconfLiveVueWeb.SlidesLive do
   def handle_params(params, _uri, socket) do
     case Integer.parse(params["slide_number"] || "") do
       {slide_number, _} ->
-        {:noreply, assign(socket, currentSlide: slide_number - 1)}
+        {:noreply, assign(socket, currentSlide: max(0, slide_number - 1))}
 
       :error ->
         {:noreply, push_patch(socket, to: ~p"/slides/1")}
