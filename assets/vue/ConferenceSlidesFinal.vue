@@ -22,6 +22,7 @@ import postlineExample from "@/images/postline_example.png";
 import diagramLiveViewInitial from "@/images/diagram_live_view_initial.png";
 import diagramLiveViewFinal from "@/images/diagram_live_view_final.png";
 import diagramLiveVue from "@/images/diagram_live_vue.png";
+import vite from "@/images/vite.png";
 import me from "@/images/foto_small.jpeg";
 import hooks from "@/images/diagram_hooks.png";
 import vueSigil from "@/images/vue_sigil.png";
@@ -70,19 +71,22 @@ const diff = ref(0);
 
 watch(
   () => props.currentSlide,
-  () => {
-    nextTick(() => {
-      console.log("highlighting");
-      console.log(document.querySelectorAll("pre code"));
-      Prism.highlightAll();
-    });
-  }
+  () => nextTick(Prism.highlightAll)
 );
 
 useSlideAnimation({
-  totalSteps: 50,
   onSlideChange: (direction) => patch(`/slides/${props.currentSlide + direction + 1}`),
 });
+
+const toggleFullscreen = () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+};
 </script>
 
 <template>
@@ -90,6 +94,12 @@ useSlideAnimation({
     <SlideTemplate v-if="props.currentSlide === 0" variant="dragon" center>
       <h1 class="text-center text-white">Why mixing LiveView and a frontend library is a great idea</h1>
       <h2 class="text-center text-white">Jakub @Valian Skałecki</h2>
+      <button
+        @click="toggleFullscreen"
+        class="absolute bottom-10 left-1/2 -translate-x-1/2 p-2 bg-black/20 hover:bg-black/50 rounded-md text-white"
+      >
+        Fullscreen
+      </button>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 1" variant="default">
       <div class="grid grid-cols-3 gap-4">
@@ -296,6 +306,20 @@ useSlideAnimation({
       </div>
     </SlideTemplate>
     <SlideTemplate v-if="props.currentSlide === 27" variant="default">
+      <h1>Vite is a secret sauce</h1>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
+          <p>- Alternative to ESbuild</p>
+          <p>- No bundle in development - native ES Modules</p>
+          <p>- Best-in-class hot reload</p>
+          <p>- Used also for in-memory SSR</p>
+        </div>
+        <div>
+          <img :src="vite" />
+        </div>
+      </div>
+    </SlideTemplate>
+    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
       <!-- TODO - add a diagram here -->
       <h1>Integration tips & tricks</h1>
       <div class="grid grid-cols-2 gap-4 mt-8">
@@ -311,7 +335,7 @@ useSlideAnimation({
         </div>
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 28" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 29" variant="default">
       <!-- TODO - add a diagram here -->
       <h1>Integration tips & tricks</h1>
       <div class="text-center">
@@ -321,43 +345,43 @@ useSlideAnimation({
         <img :src="mixingExample" class="mt-8 w-1/2 mx-auto" />
       </div>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 29" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 30" variant="default">
       <h1>Integration tips & tricks - colocation</h1>
       <img :src="postlineColocation" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
     </SlideTemplate>
 
-    <SlideTemplate v-if="props.currentSlide === 30" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 31" variant="default">
       <h1>Integration tips & tricks - Vue sigil</h1>
       <img :src="vueSigil" class="mt-8 max-h-[60vh] mx-auto aspect-auto" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 31" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 32" variant="default">
       <h1>Phoenix utils - coming soon!</h1>
       <pre><code class="language-javascript">{{ snippets.liveVueFormCode }}</code></pre>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 32" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 33" variant="default">
       <h1>Phoenix utils - coming soon!</h1>
       <pre><code class="language-html">{{ snippets.liveVueFormHTML }}</code></pre>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 33" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 34" variant="default">
       <h1>Drawbacks</h1>
       <p>- JSON serialization is necessary, either global implementation of `Jason.encode/2` or mapping functions</p>
       <p>- Testing is more complex</p>
       <p>- JS bundle size will increase</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 34" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 35" variant="default" center>
       <h1>Demo time! QR code</h1>
       <QrcodeVue :value="props.watchersEndpoint" level="H" :size="qrcodeSize" class="w-full h-full" />
       <input type="range" v-model="qrcodeSize" min="100" max="500" class="mt-8" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 35" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 36" variant="default">
       <h1>Demo time! Emojis 😍</h1>
       <EmojiDisplay />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 36" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 37" variant="default">
       <h1>Demo time! Online users 😍</h1>
       <ExampleChart :data="props.timeseriesData" />
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 37" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 38" variant="default">
       <h1>Summary</h1>
       <p>- Clear place for declarative client-side state</p>
       <p>- Access to vast ecosystem of frontend libraries</p>
@@ -365,7 +389,7 @@ useSlideAnimation({
       <p>- LLMs are better at it than HEEX 🦾</p>
       <p>- Great DX with Vite</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 38" variant="default">
+    <SlideTemplate v-if="props.currentSlide === 39" variant="default">
       <h1>Future plans</h1>
       <p>- Igniter installer</p>
       <p>- Diff optimizations</p>
@@ -373,7 +397,7 @@ useSlideAnimation({
       <p>- Utils: Streams</p>
       <p>- Utils: File uploads</p>
     </SlideTemplate>
-    <SlideTemplate v-if="props.currentSlide === 39" variant="default" center>
+    <SlideTemplate v-if="props.currentSlide === 40" variant="default" center>
       <h1>✨ Thank you! ✨</h1>
       <p class="text-4xl mb-12">Let's build amazing hybrid apps! 💪</p>
       <p>Questions?</p>
