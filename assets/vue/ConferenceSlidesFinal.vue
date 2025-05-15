@@ -67,7 +67,7 @@ const featureCards = [
 
 const { patch } = usePhxNavigation();
 const qrcodeSize = useStorage("qrcodeSize", 500);
-const diff = ref(0);
+const diff = ref(1);
 
 const changeSlide = (direction: 1 | -1) => patch(`/slides/${props.currentSlide + direction + 1}`);
 
@@ -399,8 +399,16 @@ useSlideAnimation({ onSlideChange: changeSlide });
         <SlideTemplate v-if="props.currentSlide === 40" variant="default" center>
           <h1>✨ Thank you! ✨</h1>
           <p class="text-4xl mb-12">Let's build amazing hybrid apps! 💪</p>
+          <a href="https://github.com/Valian/live_vue" target="_blank" class="text-3xl mb-8">
+            github.com/Valian/live_vue
+          </a>
           <p>Questions?</p>
         </SlideTemplate>
+        <div class="flex flex-col items-center justify-center h-[100dvh]">
+          <div class="p-8 rounded-lg bg-green-100 flex flex-col gap-6 text-3xl" v-if="props.currentSlide === 41">
+            <ExampleCounter :count="props.count" v-model:diff="diff" />
+          </div>
+        </div>
       </div>
     </Transition>
   </div>
